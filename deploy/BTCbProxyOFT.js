@@ -1,9 +1,9 @@
 const LZ_ENDPOINTS = require("../constants/layerzeroEndpoints.json")
 const {CHAIN_STAGE, ChainStage, ChainKey} = require("@layerzerolabs/lz-sdk");
 
-const NETWORKS = [ChainKey.AVALANCHE, ChainKey.FUJI, ChainKey.FUJI_SANDBOX, "hardhat"]
+const NETWORKS = [ChainKey.AVALANCHE]
 const BTCB = {
-    [ChainStage.MAINNET]: "0x152b9d0FdC40C096757F570A51E494bd4b943E50",
+    [ChainStage.MAINNET]: "0xb279f8DD152B99Ec1D84A489D32c35bC0C7F5674",
 }
 
 module.exports = async function ({ deployments, getNamedAccounts }) {
@@ -19,10 +19,10 @@ module.exports = async function ({ deployments, getNamedAccounts }) {
     console.log(`[${hre.network.name}] Endpoint Address: ${lzEndpointAddress}`)
 
     const stage = CHAIN_STAGE[hre.network.name]
-    let tokenAddress = BTCB[stage] || (await deployments.get("Token")).address
+    let tokenAddress = BTCB[stage] //|| (await deployments.get("Token")).address
     console.log(`Token Address: ${tokenAddress}`)
 
-    await deploy("BTCbProxyOFT", {
+    await deploy("STEAKProxyOFT", {
         from: deployer,
         args: [tokenAddress, lzEndpointAddress],
         log: true,
@@ -37,4 +37,4 @@ function getDependencies() {
     }
 }
 module.exports.dependencies = getDependencies()
-module.exports.tags = ["BTCbProxyOFT"]
+module.exports.tags = ["STEAKProxyOFT"]
