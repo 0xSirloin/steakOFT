@@ -1,7 +1,7 @@
 const LZ_ENDPOINTS = require("../constants/layerzeroEndpoints.json")
 const {CHAIN_STAGE, ChainStage, ChainKey} = require("@layerzerolabs/lz-sdk");
 
-const NETWORKS = [ChainKey.AVALANCHE]
+const NETWORKS = [ChainKey.ARBITRUM]
 const BTCB = {
     [ChainStage.MAINNET]: "0xb279f8DD152B99Ec1D84A489D32c35bC0C7F5674",
 }
@@ -27,7 +27,8 @@ module.exports = async function ({ deployments, getNamedAccounts }) {
         args: [tokenAddress, lzEndpointAddress],
         log: true,
         waitConfirmations: 1,
-        skipIfAlreadyDeployed: true
+        skipIfAlreadyDeployed: true, 
+        gasLimit: 50000000
     })
 }
 
@@ -38,3 +39,8 @@ function getDependencies() {
 }
 module.exports.dependencies = getDependencies()
 module.exports.tags = ["STEAKProxyOFT"]
+
+/*
+npx hardhat verify --contract contracts/BTCbProxyOFT.sol --network avalanche 0x2ec2fcEfFeA8BCA4E60C2c813F81F9adE7d323D2 0xb279f8DD152B99Ec1D84A489D32c35bC0C7F5674 0x3c2269811836af69497E5F486A85D7316753cf62
+
+*/
